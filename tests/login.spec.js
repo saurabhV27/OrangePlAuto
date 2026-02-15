@@ -5,6 +5,7 @@ test("Login to OrangeHRM", async({browser})=>{
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    await expect(page).toHaveTitle('OrangeHRM');
 
     await page.pause();
 
