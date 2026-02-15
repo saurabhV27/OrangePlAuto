@@ -17,6 +17,7 @@ const config = {
     browserName: 'chromium',
     headless: false
   },
+  reporter: 'html',
   
 };
 
