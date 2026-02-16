@@ -1,4 +1,5 @@
-const{test,expect} = require("@playwright/test")
+const{test,expect} = require("@playwright/test");
+const { networkInterfaces } = require("node:os");
 
 
 test("Navigate to OrangeHRM", async({browser})=>{
@@ -30,6 +31,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
     //Get the name of the first product
 
     console.log(await products.first().textContent());
+    await page.waitForLoadState("networkidle");
     const allElements = await products.allInnerTexts();
     console.log(allElements);
 

@@ -1,0 +1,7 @@
+await expect(page).toHaveTitle('OrangeHRM');
+
+    await page.locator("input[name='username']").fill('Admin123');
+    await page.locator("input[name='password']").fill('admin123565');
+    await page.locator("button[type='submit']").click();
+    const errorMsg = await page.locator(".oxd-text.oxd-text--p.oxd-alert-content-text").textContent();
+    await expect(page.locator(".oxd-text.oxd-text--p.oxd-alert-content-text")).toContainText('Invalid');
