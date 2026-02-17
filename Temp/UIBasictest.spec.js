@@ -1,6 +1,6 @@
 const { expect,test } = require("@playwright/test")
 
-test.only("UI Automation",async({browser})=>{
+test("UI Automation",async({browser})=>{
 
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -35,7 +35,29 @@ test.only("UI Automation",async({browser})=>{
 
 
     await page.pause();
+})
 
+test.only("Handling child window", async({browser})=>{
+const context = await browser.newContext();
+const page = await context.newPage();
+await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+const documentLink = page.locator('[href*="documents-request"]');
+const usernName = page.locator('#username');
 
+//Handling child window
+const [newpage] = await Promise.all ([
+context.waitForEvent('page'),
+documentLink.click(),
+])
+const textCon = await newpage.locator("div p.im-para.red").textContent();
+ console.log(textCon);
+
+ const splitsent = textCon.split("@");
+ const finalreq = splitsent[1].split(" ")[0];
+ //console.log(finalreq);
+
+ await usernName.fill(finalreq);
+ console.log(await usernName.inputValue());
+ await page.pause();
 
 })
