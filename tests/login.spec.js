@@ -1,5 +1,5 @@
 const{test,expect} = require("@playwright/test");
-const { networkInterfaces } = require("node:os");
+//const { networkInterfaces } = require("node:os");
 
 
 test("Navigate to OrangeHRM", async({browser})=>{
