@@ -7,6 +7,7 @@ test.only("UI Automation",async({browser})=>{
     const usernName = page.locator('#username');
     const password = page.locator('#password');
     const submit = page.locator('#signInBtn');
+    const documentLink = page.locator('[href*="documents-request"]');
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
 
     //Invalid credentials
@@ -30,6 +31,7 @@ test.only("UI Automation",async({browser})=>{
     await expect(page.locator('#terms')).toBeChecked();
     await page.locator('#terms').uncheck();
     expect(await page.locator('#terms').isChecked()).toBeFalsy();
+    await expect(documentLink).toHaveAttribute("class","blinkingText");
 
 
     await page.pause();
