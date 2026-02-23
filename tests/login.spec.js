@@ -32,15 +32,14 @@ test("Navigate to OrangeHRM", async({browser})=>{
     //Get the name of the first product
 
     console.log(await products.first().textContent());
-    await page.waitForLoadState("networkidle");
+    await products.first().waitFor();
     const allElements = await products.allInnerTexts();
     console.log(allElements);
 
-    //Fetching the Required Product from list and adding it to the cart
-
     const count = await products.count();
-    for(let i=0;i<count;i++){
-        if(products.nth(i).locator('b').textContent === productName)
+    for(let i=0; i<count ; ++i)
+        {
+        if(await products.nth(i).locator('b').textContent() === productName)
             {
                 //click on add to cart 
                 console.log("Clicking the add to cart button !!");
