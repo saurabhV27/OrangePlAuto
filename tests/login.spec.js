@@ -10,6 +10,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
     const login = page.locator('#login');
     const products = page.locator('.card-body');
     const productName = 'ZARA COAT 3'
+    
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     
     //Invalid creds
@@ -50,9 +51,11 @@ test("Navigate to OrangeHRM", async({browser})=>{
         }
     }
 
+    await page.locator('button[routerlink*="cart"]').click();
+    await page.locator('.cartSection').first().waitFor();
+    const bool = await page.locator('h3:has-text("ZARA COAT 3")').isVisible();
+    expect(bool).toBeTruthy();
 
-
-    
     await page.pause();
 
     
