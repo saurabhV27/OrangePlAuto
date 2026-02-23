@@ -8,7 +8,8 @@ test("Navigate to OrangeHRM", async({browser})=>{
     const username = page.locator('#userEmail');
     const password = page.locator('#userPassword');
     const login = page.locator('#login');
-    const products = page.locator('.card-body h5 b');
+    const products = page.locator('.card-body');
+    const productName = 'ZARA COAT 3'
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     
     //Invalid creds
@@ -34,6 +35,21 @@ test("Navigate to OrangeHRM", async({browser})=>{
     await page.waitForLoadState("networkidle");
     const allElements = await products.allInnerTexts();
     console.log(allElements);
+
+    //Fetching the Required Product from list and adding it to the cart
+
+    const count = await products.count();
+    for(let i=0;i<count;i++){
+        if(products.nth(i).locator('b').textContent=== productName)
+            {
+                //click on add to cart 
+                console.log("Clicking the add to cart button !!");
+                await products.nth(i).locator("text= Add To Cart").click();
+                break;
+
+
+        }
+    }
 
 
 
