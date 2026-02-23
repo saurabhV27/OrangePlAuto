@@ -40,7 +40,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
 
     const count = await products.count();
     for(let i=0;i<count;i++){
-        if(products.nth(i).locator('b').textContent=== productName)
+        if(products.nth(i).locator('b').textContent === productName)
             {
                 //click on add to cart 
                 console.log("Clicking the add to cart button !!");
