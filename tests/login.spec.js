@@ -11,6 +11,9 @@ test("Navigate to OrangeHRM", async({browser})=>{
     const products = page.locator('.card-body');
     const productName = 'ZARA COAT 3'
     const paymentForm = page.locator(".field .input.txt");
+    const listCountry = page.locator('.ta-results.list-group.ng-star-inserted span');
+    const nameCountry = " India";
+
     
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     
@@ -66,7 +69,22 @@ test("Navigate to OrangeHRM", async({browser})=>{
     await paymentForm.nth(2).fill("Test User");
     await paymentForm.last().fill("rahulshettyacademy");
     await page.locator(".btn.btn-primary.mt-1").click();
-    expect(page.locator(".mt-1.ng-star-inserted")).toContainText("Applied")
+    expect(page.locator(".mt-1.ng-star-inserted")).toContainText("Applied");
+
+    await page.locator('input[placeholder="Select Country"]').pressSequentially("ind");
+    await listCountry.first().waitFor();
+    const countryCount = await listCountry.count();
+    console.log(countryCount);
+
+    for(let i=0; i<countryCount;++i){
+        if(await listCountry.nth(i).textContent() === nameCountry){
+            console.log ("Entering the country condition")
+            await listCountry.nth(i).click();
+            break;
+
+        }
+   }
+    
 
 
 
