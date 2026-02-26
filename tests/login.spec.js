@@ -13,6 +13,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
     const paymentForm = page.locator(".field .input.txt");
     const listCountry = page.locator('.ta-results.list-group.ng-star-inserted span');
     const nameCountry = " India";
+    const email = "testEmail@user.automation";
 
     
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
@@ -28,7 +29,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
 
     //Valid creds
 
-    await username.fill("testEmail@user.automation");
+    await username.fill(email);
     await password.fill("Testthissite@123");
     await login.click();
     console.log(await page.title());
@@ -69,6 +70,7 @@ test("Navigate to OrangeHRM", async({browser})=>{
     await paymentForm.nth(2).fill("Test User");
     await paymentForm.last().fill("rahulshettyacademy");
     await page.locator(".btn.btn-primary.mt-1").click();
+    await page.locator(".mt-1.ng-star-inserted").waitFor();
     expect(page.locator(".mt-1.ng-star-inserted")).toContainText("Applied");
 
     await page.locator('input[placeholder="Select Country"]').pressSequentially("ind");
@@ -84,11 +86,12 @@ test("Navigate to OrangeHRM", async({browser})=>{
 
         }
    }
-    
 
-
-
-    await page.pause();
+   await expect(page.locator('.user__name.mt-5 label')).toHaveText(email);
+   await page.locator('//a[text()="Place Order "]').waitFor();
+   await page.locator('//a[text()="Place Order "]').click();
+  
+   await page.pause();
 
     
 });
