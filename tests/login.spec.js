@@ -10,6 +10,10 @@ test("Navigate to OrangeHRM", async({browser})=>{
     const login = page.locator('#login');
     const products = page.locator('.card-body');
     const productName = 'ZARA COAT 3'
+    const paymentForm = page.locator(".field .input.txt");
+    const listCountry = page.locator('.ta-results.list-group.ng-star-inserted span');
+    const nameCountry = " India";
+
     
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     
@@ -46,15 +50,43 @@ test("Navigate to OrangeHRM", async({browser})=>{
                 console.log("Clicking the add to cart button !!");
                 await products.nth(i).locator("text= Add To Cart").click();
                 break;
-
-
-        }
+    }
     }
 
     await page.locator('button[routerlink*="cart"]').click();
     await page.locator('.cartSection').first().waitFor();
     const bool = await page.locator('h3:has-text("ZARA COAT 3")').isVisible();
     expect(bool).toBeTruthy();
+    await page.locator("button[type='button']").last().click();
+
+    //Payment page
+
+    await page.locator(".field .input.txt.text-validated").fill("1234123412341234");
+    await page.locator(".input.ddl").first().selectOption("03");
+    await page.locator(".input.ddl").last().selectOption("27");
+
+    await page.locator(".field.small .input.txt").first().pressSequentially("098");
+    await paymentForm.nth(2).fill("Test User");
+    await paymentForm.last().fill("rahulshettyacademy");
+    await page.locator(".btn.btn-primary.mt-1").click();
+    expect(page.locator(".mt-1.ng-star-inserted")).toContainText("Applied");
+
+    await page.locator('input[placeholder="Select Country"]').pressSequentially("ind");
+    await listCountry.first().waitFor();
+    const countryCount = await listCountry.count();
+    console.log(countryCount);
+
+    for(let i=0; i<countryCount;++i){
+        if(await listCountry.nth(i).textContent() === nameCountry){
+            console.log ("Entering the country condition")
+            await listCountry.nth(i).click();
+            break;
+
+        }
+   }
+    
+
+
 
     await page.pause();
 
