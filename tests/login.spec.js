@@ -82,7 +82,8 @@ test("Navigate to OrangeHRM", async({browser})=>{
         if(await listCountry.nth(i).textContent() === nameCountry){
             console.log ("Entering the country condition")
             await listCountry.nth(i).click();
-            break;
+            break;// come out of the loop after sekecting
+            
 
         }
    }
