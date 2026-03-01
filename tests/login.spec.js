@@ -76,11 +76,10 @@ test("Navigate to OrangeHRM", async({browser})=>{
     await page.locator('input[placeholder="Select Country"]').pressSequentially("ind");
     await listCountry.first().waitFor();
     const countryCount = await listCountry.count();
-    console.log(countryCount);
+    //console.log(countryCount);
 
     for(let i=0; i<countryCount;++i){
         if(await listCountry.nth(i).textContent() === nameCountry){
-            console.log ("Entering the country condition")
             await listCountry.nth(i).click();
             break;// come out of the loop after sekecting
             
@@ -91,6 +90,11 @@ test("Navigate to OrangeHRM", async({browser})=>{
    await expect(page.locator('.user__name.mt-5 label')).toHaveText(email);
    await page.locator('//a[text()="Place Order "]').waitFor();
    await page.locator('//a[text()="Place Order "]').click();
+
+   //verifying the Thankyou message
+   expect(page.locator('.hero-primary')).toHaveText(" Thankyou for the order. ");
+   const orderId = await page.locator("label.ng-star-inserted").innerText();
+   console.log(orderId);
   
    await page.pause();
 
