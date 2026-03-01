@@ -92,12 +92,30 @@ test("Navigate to OrangeHRM", async({browser})=>{
    await page.locator('//a[text()="Place Order "]').click();
 
    //verifying the Thankyou message
+   await page.locator('.hero-primary').waitFor();
    expect(page.locator('.hero-primary')).toHaveText(" Thankyou for the order. ");
-   const orderId = await page.locator("label.ng-star-inserted").innerText();
+   const orderNo = await page.locator("label.ng-star-inserted").innerText();
+   let orderId = orderNo.split("|")[1];
+   orderId = orderId.trim();
    console.log(orderId);
+
+   // verifying the order id
+
+   await page.locator("button[routerlink='/dashboard/myorders']").click();
+   const orderList = await page.locator('tbody tr');
+   await page.waitForLoadState();
+   console.log(orderList.count());
+    for(let i=0; i<orderList.count();++i){
+        const actualOrderId = await orderList.nth(i).locator('th').textContent();
+        console.log(actualOrderId);
+
+        if( orderId.includes(actualOrderId)){
+            await orderList.nth(i).locator('button.btn.btn-primary').click();
+            break;
+        }
+    }
   
    await page.pause();
-
     
 });
 
