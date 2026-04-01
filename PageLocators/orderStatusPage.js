@@ -11,12 +11,12 @@ class orderStatusPage{
 
    async orderVerify(){
         await this.msgVerify.waitFor();
-        expect(this.msgVerify).toHaveText(" Thankyou for the order. ");
+        await expect(this.msgVerify).toHaveText(" Thankyou for the order. ");
         const orderNo = await this.orderID.innerText();
-        let orderId = orderNo.split("|")[1];
-        orderId = orderId.trim();
-        console.log(orderId);
+        let orderId = await orderNo.split("|")[1];
+        orderId = await orderId.trim();
         return orderId;
+        
     }
 
 }
