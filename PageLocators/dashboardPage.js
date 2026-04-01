@@ -10,7 +10,7 @@ constructor(page){
 
 async productSelect(productName){
 
-    console.log(await this.products.first().textContent());
+        console.log(await this.products.first().textContent());
         await this.products.first().waitFor();
         const allElements = await this.products.allInnerTexts();
         console.log(allElements);
@@ -27,7 +27,10 @@ async productSelect(productName){
         }
         }
     
-        await this.cartBtn.click();
+}
+
+async navigateToCart(){
+    await this.cartBtn.click();
 }
 
 }
